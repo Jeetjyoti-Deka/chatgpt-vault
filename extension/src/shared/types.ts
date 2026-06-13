@@ -10,3 +10,7 @@ export interface Conversation {
   exportedAt: string;
   messages: Message[];
 }
+
+export interface RawConversation {
+  [key: string]: Record<string, any>
+}

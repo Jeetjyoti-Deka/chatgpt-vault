@@ -2,8 +2,6 @@ export function parseConversation(
   conversation: any
 ) {
   const mapping = conversation.mapping;
-  
-
   const messages = [];
 
   let current =

@@ -1,5 +1,10 @@
 import { parseConversation } from "../parsers/conversation";
 
+import { exportMarkdown } from "../exporters/markdown";
+
+import { downloadFile } from "../exporters/download";
+import type { RawConversation } from "../shared/types";
+
 const btn =
   document.getElementById(
     "extractBtn"
@@ -24,7 +29,7 @@ btn.addEventListener("click", async () => {
     return 
   }
 
-  const result =
+  const result: RawConversation =
     await chrome.storage.local.get(
       conversationId
     );
@@ -33,9 +38,31 @@ btn.addEventListener("click", async () => {
     "raw conversation data: ", result[conversationId]
   );
 
+  const conversation = result[conversationId];
+
+  if (!conversation) {
+    alert(
+      "Conversation not found."
+    );
+
+    return;
+  }
+
   const messages =
-  parseConversation(result[conversationId]);
+  parseConversation(conversation);
 
   console.log("parsed messages: ", messages);
   console.log("parsed messages length: ", messages.length);
+
+  const markdown =
+      exportMarkdown(
+        conversation.title,
+        messages
+      );
+
+    downloadFile(
+      `${conversation.title}.md`,
+      markdown,
+      "text/markdown"
+    );
 });
