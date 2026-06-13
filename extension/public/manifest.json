@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "ChatGPT Exporter",
+  "version": "0.0.1",
+
+  "description": "Export ChatGPT conversations",
+
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://chat.openai.com/*"
+  ],
+
+  "action": {
+    "default_popup": "src/popup/popup.html"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "page-interceptor.js"
+      ],
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ]
+    }
+  ]
+}
