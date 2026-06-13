@@ -49,3 +49,16 @@ export function parseConversation(
 
   return messages;
 }
+
+export function cleanContent(
+  content: string
+): string {
+  console.log("content: ", content);
+  
+  return content
+    .replace(/url|/g, "")
+    .replace(
+      new RegExp("", "g"),
+      ""
+    );
+}

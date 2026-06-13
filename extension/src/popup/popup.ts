@@ -1,9 +1,17 @@
 import { parseConversation } from "../parsers/conversation";
 
-import { exportMarkdown } from "../exporters/markdown";
-
-import { downloadFile } from "../exporters/download";
+// import { exportMarkdown } from "../exporters/markdown";
+// import { downloadFile } from "../exporters/download";
 import type { RawConversation } from "../shared/types";
+
+
+import {
+  renderConversationHtml
+} from "../renderers/html";
+
+import {
+  previewHtml
+} from "../exporters/preview";
 
 const btn =
   document.getElementById(
@@ -54,15 +62,23 @@ btn.addEventListener("click", async () => {
   console.log("parsed messages: ", messages);
   console.log("parsed messages length: ", messages.length);
 
-  const markdown =
-      exportMarkdown(
-        conversation.title,
-        messages
-      );
+  // const markdown =
+  //     exportMarkdown(
+  //       conversation.title,
+  //       messages
+  //     );
 
-    downloadFile(
-      `${conversation.title}.md`,
-      markdown,
-      "text/markdown"
-    );
+  // downloadFile(
+  //   `${conversation.title}.md`,
+  //   markdown,
+  //   "text/markdown"
+  // );
+
+  const html =
+  renderConversationHtml(
+    conversation.title,
+    messages
+  );
+
+  previewHtml(html);
 });
